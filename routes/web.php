@@ -17,7 +17,6 @@ use App\Models\Document;
 // AUTHENTICATION
 // ==========================================
 
-// Login page (accessible without logging in)
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->middleware('guest')
     ->name('login');
@@ -31,7 +30,7 @@ Route::post('/login', [AuthController::class, 'login'])
 
 Route::middleware('auth')->group(function () {
 
-    // Redirect homepage to company dashboard
+    // Homepage
     Route::get('/', function () {
         return redirect('/clients');
     });
@@ -50,7 +49,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/clients', [ClientController::class, 'store']);
 
-    // View transactions for a specific client
     Route::get('/clients/{client}/transactions', function (Client $client) {
 
         $transactions = Transaction::where('client_id', $client->id)
@@ -73,13 +71,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/transactions', [TransactionController::class, 'store']);
 
-    // TC-006: Protected transaction deletion
+    // Protected transaction deletion
     Route::delete('/transactions/{transaction}', [
         TransactionController::class,
         'destroy'
     ])->name('transactions.destroy');
 
-    // View documents for a specific transaction
+    // Transaction document library
     Route::get('/transactions/{transaction}/documents', function (Transaction $transaction) {
 
         $transaction->load('client');
@@ -104,12 +102,25 @@ Route::middleware('auth')->group(function () {
         'create'
     ]);
 
+    // Upload document
     Route::post('/documents', [
         DocumentController::class,
         'store'
     ]);
 
-    // Secure document preview/download
+    // Replace existing document
+    Route::put('/documents/{document}', [
+        DocumentController::class,
+        'update'
+    ])->name('documents.update');
+
+    // Delete existing document
+    Route::delete('/documents/{document}', [
+        DocumentController::class,
+        'destroy'
+    ])->name('documents.destroy');
+
+    // Preview/download document
     Route::get('/documents/{document}/download', function (Document $document) {
 
         if (!Storage::disk('local')->exists($document->file_path)) {
@@ -130,31 +141,26 @@ Route::middleware('auth')->group(function () {
     // BIR INVOICE & RECEIPTS MODULE
     // ======================================
 
-    // Display BIR invoice library
     Route::get('/bir-documents', [
         BirDocumentController::class,
         'index'
     ])->name('bir.index');
 
-    // Upload invoice with invoice number
     Route::post('/bir-documents', [
         BirDocumentController::class,
         'store'
     ])->name('bir.store');
 
-    // Compile selected invoices into one PDF
     Route::post('/bir-documents/compile', [
         BirDocumentController::class,
         'compile'
     ])->name('bir.compile');
 
-    // Preview individual invoice
     Route::get('/bir-documents/{document}/preview', [
         BirDocumentController::class,
         'preview'
     ])->name('bir.preview');
 
-    // Download individual invoice
     Route::get('/bir-documents/{document}/download', [
         BirDocumentController::class,
         'download'
