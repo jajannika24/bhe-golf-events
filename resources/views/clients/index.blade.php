@@ -43,7 +43,7 @@
             <a href="/clients" class="nav-item active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['grid'] !!}</svg>Dashboard</a>
             <a href="/transactions" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['list'] !!}</svg>Transactions</a>
             <a href="#companies" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['briefcase'] !!}</svg>Companies</a>
-            <span class="nav-item disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['file'] !!}</svg>BIR Documents <span class="soon">SOON</span></span>
+            <a href="{{ route('bir.index') }}" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['file'] !!}</svg>BIR Documents</a>
         </div>
     </nav>
     <div class="sidebar-bottom">A centralized workspace for company records, golf event transactions, and supporting documents.</div>
@@ -63,7 +63,7 @@
         <a href="/clients/create" class="primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">{!! $svg['plus'] !!}</svg>Add New Company</a>
     </div>
     <section class="hero" aria-label="Welcome">
-        <div class="hero-copy"><h2>Welcome to your management workspace</h2><p>Access event transactions, find company records, and keep financial documents organized. Your BIR invoice and receipt workspace will be available here once the upload module is completed.</p></div>
+        <div class="hero-copy"><h2>Welcome to your management workspace</h2><p>Access event transactions, find company records, and keep financial documents organized. Use the BIR Invoice & Receipts workspace to upload, organize, preview, download, and compile invoices independently of companies and transactions.</p></div>
         <div class="hero-art" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">{!! $svg['layers'] !!}</svg></div>
     </section>
     <div class="section-title"><h3>Quick access</h3><span>Core modules</span></div>
@@ -72,10 +72,10 @@
             <div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['list'] !!}</svg></div>
             <div><h4>Transactions</h4><p>View and manage golf event transactions, payment statuses, and associated records.</p><div class="module-bottom">Open transactions &rarr;</div></div>
         </a>
-        <div class="module">
+        <a href="{{ route('bir.index') }}" class="module link">
             <div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">{!! $svg['file'] !!}</svg></div>
-            <div><h4>BIR Invoice &amp; Receipts</h4><p>A separate space to upload invoices and receipts without linking a company or transaction.</p><span class="tag">COMING SOON</span></div>
-        </div>
+            <div><h4>BIR Invoice &amp; Receipts</h4><p>A separate space to upload invoices and receipts without linking a company or transaction.</p><div class="module-bottom">Open BIR documents &rarr;</div></div>
+        </a>
     </section>
     <div class="section-title"><h3>Find a company</h3><span>Search company records</span></div>
     <section class="panel" aria-label="Company search">
